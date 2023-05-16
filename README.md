@@ -3,16 +3,16 @@ Description...
 
 ### Install
 
-## Set up initial directory structure
+### Set up initial directory structure
 
-## Link FASTQ files with compatible file name system
+### Link FASTQ files with compatible file name system
 
-## Download reference files
+### Download reference files
 
-## Create config.yaml
+### Create config.yaml
 
-## Dry run 
+### Dry run 
 
-## Set up tmux session
+### Set up tmux session
 
-## Run snakemake 
+### Run snakemake 
