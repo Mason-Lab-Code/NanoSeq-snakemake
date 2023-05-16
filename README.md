@@ -7,10 +7,12 @@ Description...
 
 ## Link FASTQ files with compatible file name system
 
+## Download reference files
+
 ## Create config.yaml
 
 ## Dry run 
 
 ## Set up tmux session
 
-## Run 
+## Run snakemake 
