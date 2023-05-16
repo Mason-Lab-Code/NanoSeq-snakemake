@@ -11,8 +11,8 @@ Description...
 
 ### Create config.yaml
 
-### Dry run 
-
 ### Set up tmux session
+
+### Dry run 
 
 ### Run snakemake 
