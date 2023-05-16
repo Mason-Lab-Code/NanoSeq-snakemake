@@ -1,7 +1,7 @@
 # NanoSeq-snakemake
 Description...
 
-## Install
+### Install
 
 ## Set up initial directory structure
 
