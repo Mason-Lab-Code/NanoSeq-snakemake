@@ -123,9 +123,9 @@ squeue -u <username>
 
 ### Making sense of outputs
 
-Output VCF files (SNVs):
-Output VCF files (indels): 
-Mutational profile visualisations: 
-Efficiency estimation output: 
-Contamination check output: 
-
+Path to output VCF files (SNVs): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.muts.vcf.gz
+Path to output VCF files (indels): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.indel.vcf.gz
+Path to useful summary of variants called: 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/summary.txt
+Path to mutational profile visualisations: 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/results.trinuc-profiles.pdf
+Path to contamination check output: 11_contamination_check/<SAMPLE_CONDITION.out> (explanation here: https://github.com/cancerit/NanoSeq)
+Path to efficiency estimation output: 12_efficiency_estiamte/<SAMPLE_CONDITION.tsv> (explanation here: https://github.com/cancerit/NanoSeq)
