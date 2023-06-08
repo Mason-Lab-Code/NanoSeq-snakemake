@@ -18,6 +18,7 @@ mkdir 00_raw 01_ref
 ### Link FASTQ files with compatible file name system
 
 FASTQ file names must have the following structure: SAMPLE_CONDITION_read1.fastq.gz and SAMPLE_CONDITION_read1.fastq.gz (e.g. donor1_treatment1_read1.fastq.gz)
+
 You don't need to change the names of the original files. Instead, create symlinks to the original files, using the new naming structure, inside the 00_raw/ subdirectory. 
 ```
 ln -s </path/to/original-read1.fastq.gz> <00_raw/SAMPLE_CONDITION_read1.fastq.gz>
@@ -35,7 +36,9 @@ wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/reference/GRCh38_ref
 wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa.fai
 ```
 You will also need genomic mask BED files provided in this Google folder: https://drive.google.com/drive/folders/1wqkgpRTuf4EUhqCGSLA4fIg9qEEw3ZcL
+
 Genomic mask files required: SNP.sorted.GRCh38.bed.gz, SNP.sorted.GRCh38.bed.gz.tbi, NOISE.sorted.GRCh38.bed.gz, NOISE.sorted.GRCh38.bed.gz.tbi
+
 Download these locally and move them to the 01_ref/ subdirectory on Viking (throuhg WinSCP or similar). 
 
 ### Create config.yaml
@@ -123,9 +126,15 @@ squeue -u <username>
 
 ### Making sense of outputs
 
-Path to output VCF files (SNVs): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.muts.vcf.gz
-Path to output VCF files (indels): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.indel.vcf.gz
-Path to useful summary of variants called: 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/summary.txt
-Path to mutational profile visualisations: 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/results.trinuc-profiles.pdf
-Path to contamination check output: 11_contamination_check/<SAMPLE_CONDITION.out> (explanation here: https://github.com/cancerit/NanoSeq)
-Path to efficiency estimation output: 12_efficiency_estiamte/<SAMPLE_CONDITION.tsv> (explanation here: https://github.com/cancerit/NanoSeq)
+Path to output VCF files (SNVs): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.muts.vcf.gz 
+
+Path to output VCF files (indels): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.indel.vcf.gz 
+
+Path to useful summary of variants called: 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/summary.txt 
+
+Path to mutational profile visualisations: 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/results.trinuc-profiles.pdf 
+
+Path to contamination check output: 11_contamination_check/<SAMPLE_CONDITION.out> (explanation here: https://github.com/cancerit/NanoSeq) 
+
+Path to efficiency estimation output: 12_efficiency_estiamte/<SAMPLE_CONDITION.tsv> (explanation here: https://github.com/cancerit/NanoSeq) 
+
