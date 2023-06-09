@@ -48,7 +48,7 @@ Download these locally and move them to the 01_ref/ subdirectory on Viking (thro
 
 ### Create config.yaml
 
-You will need to edit the config.yaml file to specify the names of your files. 
+You will need to edit the config.yaml file to specify the names of your files. Edit the file using nano (or similar) or open in a text editor through WinSCP (or similar). 
 
 Under "SAMPLES:" enter the names of your samples, which should be the first part of your FASTQ file names (before the first underscore). 
 
@@ -68,6 +68,7 @@ SAMPLES:
 TYPES:
     treatment1:
     treatment2:
+    control:
 
 DUPLEX_TYPES:
     treatment1:
@@ -85,9 +86,9 @@ This is an overview on how to use tmux, which is a terminal multiplexer that all
 module load tools/tmux
 tmux new -s session_name
 ```
-Type Ctrl+B then D to detach from the session (it will still be active) and go back to the main terminal. 
+Type Ctrl+B then D to detach from the session and return to the main terminal. 
 
-You can now exit the terminal and log out of Viking, and the tmux session will still be active and accessible when you log back in. 
+You can now close Viking, and the tmux session will still be active and accessible when you log back in. 
 
 List out active tmux sessions - you should see the session that you just created. 
 ```
@@ -103,7 +104,7 @@ tmux kill-session -t session_name
 ```
 ### Dry run 
 
-Invoke a "dry run" of the workflow to ensure everything is set up properly. You should see all of the tasks that Snakemake 
+Invoke a "dry run" of the workflow to ensure everything is set up properly. You should see all of the jobs that Snakemake intends to submit. 
 ```
 module load tools/snakemake
 snakemake -n
