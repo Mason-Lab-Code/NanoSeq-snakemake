@@ -114,17 +114,23 @@ Start a new tmux session (as above) and invoke Snakemake to start executing the 
 
 ```
 # Create tmux session
-# Attach to tmux session
+tmux new -s nanoseq-snakemake
+# Load snakemake
+module load tools/snakemake
 # Run Snakemake
 snakemake --slurm --default-resources slurm_account=bio-cancerinf-2020 slurm_partition=nodes --jobs 24 --use-conda --conda-frontend conda
-# Detach from tmux session
+# Detach from tmux session (enter Ctrl+B then D) i.e. return to the main terminal
 ```
 Check on the progress of submitted jobs using squeue. 
 ```
 squeue -u <username>
 ```
+Check on the progress of the Snakemake execution by reattaching to the tmux session. 
+```
+tmux attach-session -t nanoseq-snakemake
+```
 
-### Making sense of outputs
+### Outputs
 
 Path to output VCF files (SNVs): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.muts.vcf.gz 
 
