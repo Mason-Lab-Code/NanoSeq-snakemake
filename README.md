@@ -22,7 +22,7 @@ mkdir 00_raw 01_ref
 ```
 ### Link FASTQ files with compatible file name system
 
-FASTQ file names must have the following structure: SAMPLE_CONDITION_read1.fastq.gz and SAMPLE_CONDITION_read1.fastq.gz (e.g. donor1_treatment1_read1.fastq.gz)
+FASTQ file names must have the following structure: SAMPLE_CONDITION_read1.fastq.gz and SAMPLE_CONDITION_read2.fastq.gz (e.g. donor1_treatment1_read1.fastq.gz and donor1_treatment1_read2.fastq.gz)
 
 You don't need to change the names of the original files. Instead, create symlinks to the original files, using the new naming structure, inside the 00_raw/ subdirectory. 
 ```
