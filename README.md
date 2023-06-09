@@ -8,6 +8,11 @@ To use this Snakemake workflow, simply move to the directory in which you would 
 ```
 git clone https://github.com/Mason-Lab-Code/NanoSeq-snakemake/
 ```
+### Configuration for using conda environments on Viking
+
+One of the tools used in this workflow requires installation into an environment using conda. 
+
+If you haven't used conda environments on Viking before, follow the set up instructions available here: https://wiki.york.ac.uk/pages/viewpage.action?pageId=218794148 
 
 ### Set up initial directory structure
 
