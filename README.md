@@ -44,7 +44,7 @@ You will also need genomic mask BED files provided in this Google folder: https:
 
 Genomic mask files required: SNP.sorted.GRCh38.bed.gz, SNP.sorted.GRCh38.bed.gz.tbi, NOISE.sorted.GRCh38.bed.gz, NOISE.sorted.GRCh38.bed.gz.tbi
 
-Download these locally and move them to the 01_ref/ subdirectory on Viking (throuhg WinSCP or similar). 
+Download these locally and move them to the 01_ref/ subdirectory on Viking (through WinSCP or similar). 
 
 ### Create config.yaml
 
