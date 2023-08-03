@@ -4,9 +4,10 @@ This is a Snakemake workflow for the complete NanoSeq bioinformatics pipeline (h
 
 ### Install
 
-To use this Snakemake workflow, simply move to the directory in which you would like to execute the workflow, and clone this repository.  
+To use this Snakemake workflow, simply clone this repository and change directory into it.  
 ```
 git clone https://github.com/Mason-Lab-Code/NanoSeq-snakemake/
+cd NanoSeq-snakemake/
 ```
 ### Configuration for using conda environments on Viking
 
@@ -121,10 +122,11 @@ Start a new tmux session (as above) and invoke Snakemake to start executing the 
 ```
 # Create tmux session
 tmux new -s nanoseq-snakemake
-# Load snakemake
+# Load conda and snakemake
+module load lang/Anaconda3
 module load tools/snakemake
 # Run Snakemake
-snakemake --slurm --default-resources slurm_account=bio-cancerinf-2020 slurm_partition=nodes --jobs 24 --use-conda --conda-frontend conda
+snakemake --slurm --default-resources slurm_account=<account-name> slurm_partition=nodes --jobs 24 --use-conda --conda-frontend conda
 # Detach from tmux session (enter Ctrl+B then D) i.e. return to the main terminal
 ```
 Check on the progress of submitted jobs using squeue. 
