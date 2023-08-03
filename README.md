@@ -89,7 +89,7 @@ tmux new -s session_name
 ```
 Type Ctrl+B then D to detach from the session and return to the main terminal. 
 
-You can now close Viking, and the tmux session will still be active and accessible when you log back in. 
+You can now close Viking, and the tmux session will still be active and accessible when you log back in. Make sure you are on the same login node (i.e. login1 or login2) when you return. 
 
 List out active tmux sessions - you should see the session that you just created. 
 ```
