@@ -97,15 +97,17 @@ rule bwa_mem:
         sa="01_ref/GRCh38.primary_assembly.genome.fa.sa"
     output:
         sam="05_sam/{sample}_{type}.sam"
+    params:
+        threads=8
     resources:
         runtime=2880, # 48h
-        mem_mb=96000,
-        cpus_per_task=24
+        mem_mb=48000,
+        cpus_per_task=8
     shell:
         r"""
         module load bio/BWA
 
-        bwa mem -C \
+        bwa mem -C -t {params.threads} \
           {input.fa} \
           {input.fq1} \
           {input.fq2} > {output.sam}
