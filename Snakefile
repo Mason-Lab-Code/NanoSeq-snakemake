@@ -119,11 +119,11 @@ rule sort_and_add_rc_mc_tags:
     output:
         "06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam"
     params:
-        threads=8
+        threads=4
     resources:
         runtime=540,
-        mem_mb=32000,
-        cpus_per_task=8
+        mem_mb=24000,
+        cpus_per_task=4
     shell:
         r"""
         module purge
