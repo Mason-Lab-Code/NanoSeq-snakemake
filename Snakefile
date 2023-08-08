@@ -96,7 +96,7 @@ rule bwa_mem:
         pac="01_ref/GRCh38.primary_assembly.genome.fa.pac",
         sa="01_ref/GRCh38.primary_assembly.genome.fa.sa"
     output:
-        sam="05_sam/{sample}_{type}.sam"
+        temp("05_sam/{sample}_{type}.sam")
     params:
         threads=8
     resources:
@@ -110,7 +110,7 @@ rule bwa_mem:
         bwa mem -C -t {params.threads} \
           {input.fa} \
           {input.fq1} \
-          {input.fq2} > {output.sam}
+          {input.fq2} > {output}
         """
 
 rule sort_and_add_rc_mc_tags:
@@ -118,6 +118,8 @@ rule sort_and_add_rc_mc_tags:
         "05_sam/{sample}_{type}.sam"
     output:
         "06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam"
+    params:
+        threads=8
     resources:
         runtime=540,
         mem_mb=32000,
@@ -127,7 +129,7 @@ rule sort_and_add_rc_mc_tags:
         module purge
         module load bio/NanoSeq
 
-        bamsormadup inputformat=sam rcsupport=1 threads=1 < {input} > {output}
+        bamsormadup inputformat=sam rcsupport=1 threads={params.threads} < {input} > {output}
         """
 
 rule mark_dups:
@@ -136,16 +138,18 @@ rule mark_dups:
     output:
         bam="07_bam_mark_dups/{sample}_{type}.mark_dups.bam",
         bai="07_bam_mark_dups/{sample}_{type}.mark_dups.bam.bai"
+    params:
+        threads=4
     resources:
         runtime=540,
-        mem_mb=6000,
+        mem_mb=3000,
         cpus_per_task=4
     shell:
         r"""
         module purge
         module load bio/NanoSeq
 
-        bammarkduplicatesopt optminpixeldif=2500 I={input} O={output.bam}
+        bammarkduplicatesopt inputthreads={params.threads} optminpixeldif=2500 I={input} O={output.bam}
 
         module purge
         module load bio/SAMtools/1.16.1-GCC-11.3.0
