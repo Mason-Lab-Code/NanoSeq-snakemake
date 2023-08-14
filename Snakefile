@@ -165,8 +165,8 @@ rule filter_and_append_rb_tags:
         bai="08_bam_rb_tags/{sample}_{type}.rb_tags.bam.bai"
     resources:
         runtime=480,
-        mem_mb=6000,
-        cpus_per_task=4
+        mem_mb=1000,
+        cpus_per_task=1
     shell:
         r"""
         module purge
@@ -188,8 +188,8 @@ rule keep_random_read:
         bai="09_bam_random_read/{sample}_{type}.random_read.bam.bai"
     resources:
         runtime=420,
-        mem_mb=10000,
-        cpus_per_task=4
+        mem_mb=4000,
+        cpus_per_task=1
     shell:
         r"""
         module purge
