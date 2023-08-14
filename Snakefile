@@ -53,8 +53,8 @@ rule extract_tags:
         read_length=150
     resources:
         runtime=300,
-        mem_mb=24000,
-        cpus_per_task=5
+        mem_mb=1000,
+        cpus_per_task=1
     shell:
         r"""
         module purge
