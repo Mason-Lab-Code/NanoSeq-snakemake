@@ -322,7 +322,7 @@ rule estimate_efficiency:
     params:
         threads=2
     resources:
-        runtime=180, # 3h
+        runtime=60, # 3h
         mem_mb=10000,
         cpus_per_task=2
     shell:
