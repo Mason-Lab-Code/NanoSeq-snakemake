@@ -299,9 +299,9 @@ rule check_contamination:
         out="11_contamination_check/{sample}_{type}.out",
         selfsm="11_contamination_check/{sample}_{type}.selfSM"
     resources:
-        runtime=120, # 2h
-        mem_mb=48000,
-        cpus_per_task=12
+        runtime=60, 
+        mem_mb=2000,
+        cpus_per_task=4
     conda:
         "VerifyBamID2-conda-env.yaml"
     shell:
