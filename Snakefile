@@ -319,10 +319,12 @@ rule estimate_efficiency:
         rbs="12_efficiency_estimate/{sample}_{type}.RBs",
         gc_inserts="12_efficiency_estimate/{sample}_{type}.RBs.GC_inserts.tsv",
         pdf="12_efficiency_estimate/{sample}_{type}.RBs.pdf"
+    params:
+        threads=2
     resources:
         runtime=180, # 3h
-        mem_mb=24000,
-        cpus_per_task=6
+        mem_mb=10000,
+        cpus_per_task=2
     shell:
         r"""
         module purge
@@ -330,5 +332,5 @@ rule estimate_efficiency:
 
         mkdir -p 12_efficiency_estimate
         cd 12_efficiency_estimate
-        efficiency_nanoseq.pl -d ../{input.bam_randomread} -x ../{input.bam_rbtags} -r ../{input.genome} -o {wildcards.sample}_{wildcards.type}
+        efficiency_nanoseq.pl -t {params.threads} -d ../{input.bam_randomread} -x ../{input.bam_rbtags} -r ../{input.genome} -o {wildcards.sample}_{wildcards.type}
         """
