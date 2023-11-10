@@ -4,7 +4,7 @@ rule all:
     input:
         qc="03_qc/multiqc_report.html",
         analysis=expand("10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"]),
-        contamination=expand("11_contamination_check/{sample}_{type}.out", sample=config["SAMPLES"], type=config["TYPES"]),
+#        contamination=expand("11_contamination_check/{sample}_{type}.out", sample=config["SAMPLES"], type=config["TYPES"]),
         efficiency=expand("12_efficiency_estimate/{sample}_{type}.RBs", sample=config["SAMPLES"], type=config["TYPES"])
 
 rule fastqc:
@@ -20,7 +20,8 @@ rule fastqc:
         cpus_per_task=9
     shell:
         r"""
-        module load bio/FastQC
+        module purge
+        module load FastQC/0.11.9-Java-11
 
         mkdir {output}
         fastqc -t {params.threads} -o {output} {input}
@@ -37,7 +38,7 @@ rule multiqc:
     shell:
         r"""
         module purge
-        module load bio/MultiQC
+        module load MultiQC/1.13-intel-2021b
 
         multiqc 03_qc/*_fastqc/ -o 03_qc/
         """
@@ -58,7 +59,7 @@ rule extract_tags:
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 4 -l {params.read_length}
         """
@@ -79,7 +80,8 @@ rule bwa_index:
         cpus_per_task=8
     shell:
         r"""
-        module load bio/BWA
+        module purge
+        module load BWA/0.7.17-GCCcore-11.2.0
 
         bwa index {input}
         """
@@ -105,7 +107,8 @@ rule bwa_mem:
         cpus_per_task=8
     shell:
         r"""
-        module load bio/BWA
+        module purge
+        module load BWA/0.7.17-GCCcore-11.2.0
 
         bwa mem -C -t {params.threads} \
           {input.fa} \
@@ -117,7 +120,7 @@ rule sort_and_add_rc_mc_tags:
     input:
         "05_sam/{sample}_{type}.sam"
     output:
-        "06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam"
+        temp("06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam")
     params:
         threads=4
     resources:
@@ -127,7 +130,7 @@ rule sort_and_add_rc_mc_tags:
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         bamsormadup inputformat=sam rcsupport=1 threads={params.threads} < {input} > {output}
         """
@@ -136,7 +139,7 @@ rule mark_dups:
     input:
         "06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam"
     output:
-        bam="07_bam_mark_dups/{sample}_{type}.mark_dups.bam",
+        temp(bam="07_bam_mark_dups/{sample}_{type}.mark_dups.bam"),
         bai="07_bam_mark_dups/{sample}_{type}.mark_dups.bam.bai"
     params:
         threads=4
@@ -147,12 +150,12 @@ rule mark_dups:
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         bammarkduplicatesopt inputthreads={params.threads} optminpixeldif=2500 I={input} O={output.bam}
 
         module purge
-        module load bio/SAMtools/1.16.1-GCC-11.3.0
+        module load SAMtools/1.16.1-GCC-11.3.0
 
         samtools index -o {output.bai} {output.bam}
         """
@@ -170,12 +173,12 @@ rule filter_and_append_rb_tags:
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         bamaddreadbundles -I {input} -O {output.bam}
 
         module purge
-        module load bio/SAMtools/1.16.1-GCC-11.3.0
+        module load SAMtools/1.16.1-GCC-11.3.0
 
         samtools index -o {output.bai} {output.bam}
         """
@@ -193,12 +196,12 @@ rule keep_random_read:
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         randomreadinbundle -I {input} -O {output.bam}
 
         module purge
-        module load bio/SAMtools/1.16.1-GCC-11.3.0
+        module load SAMtools/1.16.1-GCC-11.3.0
 
         samtools index -o {output.bai} {output.bam}
         """
@@ -221,7 +224,7 @@ rule run_analysis:
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         cd {output.dir}
 
@@ -299,7 +302,7 @@ rule check_contamination:
         out="11_contamination_check/{sample}_{type}.out",
         selfsm="11_contamination_check/{sample}_{type}.selfSM"
     resources:
-        runtime=60, 
+        runtime=60,
         mem_mb=2000,
         cpus_per_task=4
     conda:
@@ -322,13 +325,13 @@ rule estimate_efficiency:
     params:
         threads=2
     resources:
-        runtime=60, 
+        runtime=60,
         mem_mb=10000,
         cpus_per_task=2
     shell:
         r"""
         module purge
-        module load bio/NanoSeq
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         mkdir -p 12_efficiency_estimate
         cd 12_efficiency_estimate
