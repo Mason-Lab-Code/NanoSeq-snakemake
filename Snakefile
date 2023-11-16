@@ -139,7 +139,7 @@ rule mark_dups:
     input:
         "06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam"
     output:
-        temp(bam="07_bam_mark_dups/{sample}_{type}.mark_dups.bam"),
+        bam=temp("07_bam_mark_dups/{sample}_{type}.mark_dups.bam"),
         bai="07_bam_mark_dups/{sample}_{type}.mark_dups.bam.bai"
     params:
         threads=4
