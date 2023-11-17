@@ -80,6 +80,22 @@ UNDILUTED_TYPES:
     control:
 ```
 
+### Install some R packages
+
+There are 2 packages required by NanoSeq that are not pre-installed with the R version that NanoSeq uses on Viking - these are deepSNV and epitools.  
+  
+To install: 
+``
+module load NanoSeq # Load NanoSeq
+R # Start R
+``
+Then in R:
+```
+library(BiocManager)
+BiocManager::install("deepSNV")
+BiocManager::install("epitools")
+```
+
 ### Set up tmux session
 
 This is an overview on how to use tmux, which is a terminal multiplexer that allows you to invoke Snakemake, and allow it to continue running even when you disconnect from Viking. 
