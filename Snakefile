@@ -48,8 +48,8 @@ rule extract_tags:
         fq1="00_raw/{sample}_{type}_read1.fastq.gz",
         fq2="00_raw/{sample}_{type}_read2.fastq.gz"
     output:
-        fq1="04_fastq_extract_tags/{sample}_{type}_read1.extract_tags.fastq.gz",
-        fq2="04_fastq_extract_tags/{sample}_{type}_read2.extract_tags.fastq.gz"
+        fq1=temp("04_fastq_extract_tags/{sample}_{type}_read1.extract_tags.fastq.gz"),
+        fq2=temp("04_fastq_extract_tags/{sample}_{type}_read2.extract_tags.fastq.gz")
     params:
         read_length=150
     resources:
@@ -140,7 +140,7 @@ rule mark_dups:
         "06_bam_rc_mc_tags/{sample}_{type}.rc_mc_tags.bam"
     output:
         bam=temp("07_bam_mark_dups/{sample}_{type}.mark_dups.bam"),
-        bai="07_bam_mark_dups/{sample}_{type}.mark_dups.bam.bai"
+        bai=temp("07_bam_mark_dups/{sample}_{type}.mark_dups.bam.bai")
     params:
         threads=4
     resources:
@@ -326,8 +326,8 @@ rule estimate_efficiency:
         threads=2
     resources:
         runtime=60,
-        mem_mb=10000,
-        cpus_per_task=2
+        mem_mb=20000,
+        cpus_per_task=4
     shell:
         r"""
         module purge
