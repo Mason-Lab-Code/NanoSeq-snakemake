@@ -87,7 +87,7 @@ GENOME:
     GRCh38.primary_assembly.genome
 
 GENOME_BUILD:
-    GRCH38
+    GRCh38
 ```
 
 ### Install some R packages
