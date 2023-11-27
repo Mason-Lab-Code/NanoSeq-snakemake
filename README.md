@@ -62,6 +62,8 @@ Under "UNDILUTED_TYPES:" enter the conditions of your experiment that are undilu
 
 Under "GENOME:" enter the reference genome FASTA file (without the .fa extension)
 
+Under "GENOME_BUILD:" enter either GRCh38 or T2T-CHM13
+
 The config.yaml file should look something like this. Make sure you indent as below, and include the colon at the end of each line. 
 
 ```
@@ -83,6 +85,9 @@ UNDILUTED_TYPES:
 
 GENOME:
     GRCh38.primary_assembly.genome
+
+GENOME_BUILD:
+    GRCH38
 ```
 
 ### Install some R packages
