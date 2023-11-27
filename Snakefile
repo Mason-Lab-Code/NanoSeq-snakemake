@@ -4,7 +4,7 @@ rule all:
     input:
         qc="03_qc/multiqc_report.html",
         analysis=expand("10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"]),
-#        contamination=expand("11_contamination_check/{sample}_{type}.out", sample=config["SAMPLES"], type=config["TYPES"]),
+        contamination=expand("11_contamination_check/{sample}_{type}.out", sample=config["SAMPLES"], type=config["TYPES"]),
         efficiency=expand("12_efficiency_estimate/{sample}_{type}.RBs", sample=config["SAMPLES"], type=config["TYPES"]),
         vcfs=expand("13_vcf/{sample}_{duplex_type}-vs-{undiluted_type}.SNV.vcf.gz", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"])
 
@@ -306,12 +306,10 @@ rule check_contamination:
         runtime=60,
         mem_mb=2000,
         cpus_per_task=4
-    conda:
-        "VerifyBamID2-conda-env.yaml"
     shell:
         r"""
         mkdir -p 11_contamination_check
-        verifybamid2 1000g.phase3 100k b38 --Reference {input.hla_fa} --BamFile {input.bam} --Output 11_contamination_check/{wildcards.sample}_{wildcards.type}
+        VerifyBamID --SVDPrefix 1000g.100k.b38.vcf.gz.dat --Reference {input.hla_fa} --BamFile {input.bam} --Output 11_contamination_check/{wildcards.sample}_{wildcards.type}
         """
 
 rule estimate_efficiency:
