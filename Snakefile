@@ -66,14 +66,14 @@ rule extract_tags:
 
 rule bwa_index:
     input:
-        "01_ref/GRCh38.primary_assembly.genome.fa"
+        "01_ref/{genome}.fa"
     output:
-        amb="01_ref/GRCh38.primary_assembly.genome.fa.amb",
-        ann="01_ref/GRCh38.primary_assembly.genome.fa.ann",
-        bwt="01_ref/GRCh38.primary_assembly.genome.fa.bwt",
-        fai="01_ref/GRCh38.primary_assembly.genome.fa.fai",
-        pac="01_ref/GRCh38.primary_assembly.genome.fa.pac",
-        sa="01_ref/GRCh38.primary_assembly.genome.fa.sa"
+        amb="01_ref/{genome}.fa.amb",
+        ann="01_ref/{genome}.fa.ann",
+        bwt="01_ref/{genome}.fa.bwt",
+        fai="01_ref/{genome}.fa.fai",
+        pac="01_ref/{genome}.fa.pac",
+        sa="01_ref/{genome}.fa.sa",
     resources:
         runtime=360,
         mem_mb=32000,
@@ -90,13 +90,13 @@ rule bwa_mem:
     input:
         fq1="04_fastq_extract_tags/{sample}_{type}_read1.extract_tags.fastq.gz",
         fq2="04_fastq_extract_tags/{sample}_{type}_read2.extract_tags.fastq.gz",
-        fa="01_ref/GRCh38.primary_assembly.genome.fa",
-        amb="01_ref/GRCh38.primary_assembly.genome.fa.amb",
-        ann="01_ref/GRCh38.primary_assembly.genome.fa.ann",
-        bwt="01_ref/GRCh38.primary_assembly.genome.fa.bwt",
-        fai="01_ref/GRCh38.primary_assembly.genome.fa.fai",
-        pac="01_ref/GRCh38.primary_assembly.genome.fa.pac",
-        sa="01_ref/GRCh38.primary_assembly.genome.fa.sa"
+        fa=expand("01_ref/{genome}.fa", genome=config["GENOME"]),
+        amb=expand("01_ref/{genome}.fa.amb", genome=config["GENOME"]),
+        ann=expand("01_ref/{genome}.fa.ann", genome=config["GENOME"]),
+        bwt=expand("01_ref/{genome}.fa.bwt", genome=config["GENOME"]),
+        fai=expand("01_ref/{genome}.fa.fai", genome=config["GENOME"]),
+        pac=expand("01_ref/{genome}.fa.pac", genome=config["GENOME"]),
+        sa=expand("01_ref/{genome}.fa.sa", genome=config["GENOME"])
     output:
         temp("05_sam/{sample}_{type}.sam")
     params:
