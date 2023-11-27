@@ -60,6 +60,8 @@ Under "DUPLEX_TYPES:" enter the conditions of your experiment that are duplex.
 
 Under "UNDILUTED_TYPES:" enter the conditions of your experiment that are undiluted (matched normals). 
 
+Under "GENOME:" enter the reference genome FASTA file (without the .fa extension)
+
 The config.yaml file should look something like this. Make sure you indent as below, and include the colon at the end of each line. 
 
 ```
@@ -78,6 +80,9 @@ DUPLEX_TYPES:
 
 UNDILUTED_TYPES:
     control:
+
+GENOME:
+    GRCh38.primary_assembly.genome
 ```
 
 ### Install some R packages
