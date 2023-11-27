@@ -5,7 +5,8 @@ rule all:
         qc="03_qc/multiqc_report.html",
         analysis=expand("10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"]),
 #        contamination=expand("11_contamination_check/{sample}_{type}.out", sample=config["SAMPLES"], type=config["TYPES"]),
-        efficiency=expand("12_efficiency_estimate/{sample}_{type}.RBs", sample=config["SAMPLES"], type=config["TYPES"])
+        efficiency=expand("12_efficiency_estimate/{sample}_{type}.RBs", sample=config["SAMPLES"], type=config["TYPES"]),
+        vcfs=expand("13_vcf/{sample}_{duplex_type}-vs-{undiluted_type}.SNV.vcf.gz", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"])
 
 rule fastqc:
     input:
@@ -210,9 +211,9 @@ rule run_analysis:
     input:
         bam_undiluted="09_bam_random_read/{sample}_{undiluted_type}.random_read.bam",
         bam_duplex="08_bam_rb_tags/{sample}_{duplex_type}.rb_tags.bam",
-        genome="01_ref/GRCh38.primary_assembly.genome.fa",
-        mask_SNP="01_ref/SNP.sorted.GRCh38.bed.gz",
-        mask_NOISE="01_ref/NOISE.sorted.GRCh38.bed.gz"
+        genome=expand("01_ref/{genome}.fa", genome=config["GENOME"]),
+        mask_SNP=expand("01_ref/SNP.sorted.{build}.bed.gz", build=config["GENOME_BUILD"]),
+        mask_NOISE=expand("01_ref/NOISE.sorted.{build}.bed.gz", build=config["GENOME_BUILD"]),
     output:
         dir=directory("10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}"),
         muts="10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/tmpNanoSeq/post/results.muts.vcf.gz",
@@ -336,4 +337,22 @@ rule estimate_efficiency:
         mkdir -p 12_efficiency_estimate
         cd 12_efficiency_estimate
         efficiency_nanoseq.pl -t {params.threads} -d ../{input.bam_randomread} -x ../{input.bam_rbtags} -r ../{input.genome} -o {wildcards.sample}_{wildcards.type}
+        """
+
+rule organise_outputs:
+    input:
+        vcf_snv="10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/tmpNanoSeq/post/results.muts.vcf.gz",
+        vcf_indel="10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/tmpNanoSeq/post/results.indel.vcf.gz"
+    output:
+        vcf_snv="13_vcf/{sample}_{duplex_type}-vs-{undiluted_type}.SNV.vcf.gz",
+        vcf_indel="13_vcf/{sample}_{duplex_type}-vs-{undiluted_type}.indel.vcf.gz"
+    resources:
+        runtime=15,
+        mem_mb=500,
+        cpus_per_task=1
+    shell:
+        r"""
+        mkdir -p 13_vcf
+        cp {input.vcf_snv} {output.vcf_snv}
+        cp {input.vcf_indel} {output.vcf_indel}
         """
