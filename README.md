@@ -95,10 +95,10 @@ GENOME_BUILD:
 There are 2 packages required by NanoSeq that are not pre-installed with the R version that NanoSeq uses on Viking - these are deepSNV and epitools.  
   
 To install: 
-``
+```
 module load NanoSeq # Load NanoSeq
 R # Start R
-``
+```
 Then in R:
 ```
 library(BiocManager)
