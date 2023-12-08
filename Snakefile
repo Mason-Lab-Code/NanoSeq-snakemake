@@ -6,6 +6,7 @@ rule all:
         analysis=expand("10_analysis/{sample}_{duplex_type}-vs-{undiluted_type}/", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"]),
         contamination=expand("11_contamination_check/{sample}_{type}.out", sample=config["SAMPLES"], type=config["TYPES"]),
         efficiency=expand("12_efficiency_estimate/{sample}_{type}.RBs", sample=config["SAMPLES"], type=config["TYPES"]),
+        wg_metrics="12_efficiency_estimate/efficiency-metrics-whole-genome.tsv",
         vcfs=expand("13_vcf/{sample}_{duplex_type}-vs-{undiluted_type}.SNV.vcf.gz", sample=config["SAMPLES"], duplex_type=config["DUPLEX_TYPES"], undiluted_type=config["UNDILUTED_TYPES"])
 
 rule fastqc:
@@ -344,8 +345,10 @@ rule estimate_efficiency:
 
 rule collate_efficiency:
     input:
-        
+        expand("12_efficiency_estimate/{sample}_{type}.tsv", sample=config["SAMPLES"], type=config["TYPES"])
     output:
+        wg_metrics="12_efficiency_estimate/efficiency-metrics-whole-genome.tsv",
+        rb_metrics="12_efficiency_estimate/read-bundle-metrics-chr1-only.tsv"
     resources:
         runtime=15,
         mem_mb=500,
