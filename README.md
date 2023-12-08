@@ -64,6 +64,10 @@ Under "GENOME:" enter the reference genome FASTA file (without the .fa extension
 
 Under "GENOME_BUILD:" enter either GRCh38 or T2T-CHM13
 
+Under "READ_LENGTH:" enter the read length in bp (probably 150 bp)
+
+Under "LIBRARY_TYPE:" enter either sonicated or HPyCH4V
+
 The config.yaml file should look something like this. Make sure you indent as below, and include the colon at the end of each line. 
 
 ```
