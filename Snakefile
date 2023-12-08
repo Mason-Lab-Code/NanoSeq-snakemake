@@ -335,7 +335,23 @@ rule estimate_efficiency:
         mkdir -p 12_efficiency_estimate
         cd 12_efficiency_estimate
         efficiency_nanoseq.pl -t {params.threads} -d ../{input.bam_randomread} -x ../{input.bam_rbtags} -r ../{input.genome} -o {wildcards.sample}_{wildcards.type}
+
+        mkdir -p 12_efficiency_estimate/RBs/ 12_efficiency_estimate/RBs.GC_inserts/ 12_efficiency_estimate/RBs.pdf/
+        mv 12_efficiency_estimate/*.RBs 12_efficiency_estimate/RBs/
+        mv 12_efficiency_estimate/*.RBs.GC_inserts.tsv 12_efficiency_estimate/RBs.GC_inserts/
+        mv 12_efficiency_estimate/*.RBs.pdf 12_efficiency_estimate/RBs.pdf/
         """
+
+rule collate_efficiency:
+    input:
+        
+    output:
+    resources:
+        runtime=15,
+        mem_mb=500,
+        cpus_per_task=1
+    script:
+        "collate-efficiency-metrics.R"
 
 rule organise_outputs:
     input:
