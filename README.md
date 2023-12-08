@@ -84,10 +84,16 @@ UNDILUTED_TYPES:
     control:
 
 GENOME:
-    GRCh38.primary_assembly.genome
+    GRCh38.primary_assembly.genome:
 
 GENOME_BUILD:
-    GRCh38
+    GRCh38:
+
+READ_LENGTH:
+    150:
+
+LIBRARY_TYPE:
+    sonicated:
 ```
 
 ### Install some R packages
