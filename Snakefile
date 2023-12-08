@@ -53,7 +53,7 @@ rule extract_tags:
         fq1=temp("04_fastq_extract_tags/{sample}_{type}_read1.extract_tags.fastq.gz"),
         fq2=temp("04_fastq_extract_tags/{sample}_{type}_read2.extract_tags.fastq.gz")
     params:
-        read_length=expand("{rd_lngth}", rd_lngth=config["READ_LENGTH"])
+        read_length=config["READ_LENGTH"]
     resources:
         runtime=300,
         mem_mb=1000,
