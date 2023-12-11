@@ -53,18 +53,22 @@ rule extract_tags:
         fq1=temp("04_fastq_extract_tags/{sample}_{type}_read1.extract_tags.fastq.gz"),
         fq2=temp("04_fastq_extract_tags/{sample}_{type}_read2.extract_tags.fastq.gz")
     params:
-        read_length=config["READ_LENGTH"]
+        read_length=config["READ_LENGTH"],
+        library_type=config["LIBRARY_TYPE"]
     resources:
         runtime=300,
         mem_mb=1000,
         cpus_per_task=1
-    shell:
-        r"""
-        module purge
-        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
+    run:
+        shell(module purge)
+        shell(module load NanoSeq/3.2.1-foss-2020b-R-4.0.3)
 
-        extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 4 -l {params.read_length}
-        """
+        if params.library_type == "sonicated":
+            shell(extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 2 -l {params.read_length})
+        if params.library_type == "HPyCH4V":
+            shell(extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 4 -l {params.read_length})
+        else:
+            print("Specify library type as sonicated or HPyCH4V in config.yaml")
 
 rule bwa_index:
     input:
