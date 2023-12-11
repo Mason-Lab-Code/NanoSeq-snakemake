@@ -60,9 +60,11 @@ Under "DUPLEX_TYPES:" enter the conditions of your experiment that are duplex.
 
 Under "UNDILUTED_TYPES:" enter the conditions of your experiment that are undiluted (matched normals). 
 
-Under "GENOME:" enter the reference genome FASTA file (without the .fa extension)
-
 Under "GENOME_BUILD:" enter either GRCh38 or T2T-CHM13
+
+Under "GENOME:" enter the reference genome FASTA file
+
+Under "1000G_REFERENCE_GENOME:" enter the 1000 Genomes reference genome FASTA file (needed for VerifyBamID2 contamination check)
 
 Under "READ_LENGTH:" enter the read length in bp (probably 150 bp)
 
@@ -87,11 +89,14 @@ DUPLEX_TYPES:
 UNDILUTED_TYPES:
     control:
 
-GENOME:
-    GRCh38.primary_assembly.genome:
-
 GENOME_BUILD:
     GRCh38:
+
+GENOME:
+    GRCh38.primary_assembly.genome.fa:
+
+1000G_REFERENCE_GENOME:
+    GRCh38_full_analysis_set_plus_decoy_hla.fa:
 
 READ_LENGTH:
     150:
