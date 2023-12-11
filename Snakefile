@@ -303,7 +303,7 @@ rule run_analysis:
 rule check_contamination:
     input:
         bam="09_bam_random_read/{sample}_{type}.random_read.bam",
-        hla_fa=expand("01_ref/{1000g_ref}", 1000g_ref=config["1000G_REFERENCE_GENOME"])
+        hla_fa=expand("01_ref/{ref}", ref=config["1000G_REFERENCE_GENOME"])
     output:
         out="11_contamination_check/{sample}_{type}.out",
         selfsm="11_contamination_check/{sample}_{type}.selfSM"
