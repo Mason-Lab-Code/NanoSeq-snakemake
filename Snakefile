@@ -72,14 +72,14 @@ rule extract_tags:
 
 rule bwa_index:
     input:
-        "01_ref/{genome}.fa"
+        "01_ref/{genome}"
     output:
-        amb="01_ref/{genome}.fa.amb",
-        ann="01_ref/{genome}.fa.ann",
-        bwt="01_ref/{genome}.fa.bwt",
-        fai="01_ref/{genome}.fa.fai",
-        pac="01_ref/{genome}.fa.pac",
-        sa="01_ref/{genome}.fa.sa",
+        amb="01_ref/{genome}.amb",
+        ann="01_ref/{genome}.ann",
+        bwt="01_ref/{genome}.bwt",
+        fai="01_ref/{genome}.fai",
+        pac="01_ref/{genome}.pac",
+        sa="01_ref/{genome}.sa",
     resources:
         runtime=360,
         mem_mb=32000,
@@ -96,13 +96,13 @@ rule bwa_mem:
     input:
         fq1="04_fastq_extract_tags/{sample}_{type}_read1.extract_tags.fastq.gz",
         fq2="04_fastq_extract_tags/{sample}_{type}_read2.extract_tags.fastq.gz",
-        fa=expand("01_ref/{genome}.fa", genome=config["GENOME"]),
-        amb=expand("01_ref/{genome}.fa.amb", genome=config["GENOME"]),
-        ann=expand("01_ref/{genome}.fa.ann", genome=config["GENOME"]),
-        bwt=expand("01_ref/{genome}.fa.bwt", genome=config["GENOME"]),
-        fai=expand("01_ref/{genome}.fa.fai", genome=config["GENOME"]),
-        pac=expand("01_ref/{genome}.fa.pac", genome=config["GENOME"]),
-        sa=expand("01_ref/{genome}.fa.sa", genome=config["GENOME"])
+        fa=expand("01_ref/{genome}", genome=config["GENOME"]),
+        amb=expand("01_ref/{genome}.amb", genome=config["GENOME"]),
+        ann=expand("01_ref/{genome}.ann", genome=config["GENOME"]),
+        bwt=expand("01_ref/{genome}.bwt", genome=config["GENOME"]),
+        fai=expand("01_ref/{genome}.fai", genome=config["GENOME"]),
+        pac=expand("01_ref/{genome}.pac", genome=config["GENOME"]),
+        sa=expand("01_ref/{genome}.sa", genome=config["GENOME"])
     output:
         temp("05_sam/{sample}_{type}.sam")
     params:
@@ -216,7 +216,7 @@ rule run_analysis:
     input:
         bam_undiluted="09_bam_random_read/{sample}_{undiluted_type}.random_read.bam",
         bam_duplex="08_bam_rb_tags/{sample}_{duplex_type}.rb_tags.bam",
-        genome=expand("01_ref/{genome}.fa", genome=config["GENOME"]),
+        genome=expand("01_ref/{genome}", genome=config["GENOME"]),
         mask_SNP=expand("01_ref/SNP.sorted.{build}.bed.gz", build=config["GENOME_BUILD"]),
         mask_NOISE=expand("01_ref/NOISE.sorted.{build}.bed.gz", build=config["GENOME_BUILD"]),
     output:
@@ -303,7 +303,7 @@ rule run_analysis:
 rule check_contamination:
     input:
         bam="09_bam_random_read/{sample}_{type}.random_read.bam",
-        hla_fa="01_ref/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+        hla_fa=expand("01_ref/{1000g_ref}", 1000g_ref=config["1000G_REFERENCE_GENOME"])
     output:
         out="11_contamination_check/{sample}_{type}.out",
         selfsm="11_contamination_check/{sample}_{type}.selfSM"
@@ -321,7 +321,7 @@ rule estimate_efficiency:
     input:
         bam_rbtags="08_bam_rb_tags/{sample}_{type}.rb_tags.bam",
         bam_randomread="09_bam_random_read/{sample}_{type}.random_read.bam",
-        genome="01_ref/GRCh38.primary_assembly.genome.fa"
+        genome=expand("01_ref/{genome}", genome=config["GENOME"])
     output:
         rbs="12_efficiency_estimate/{sample}_{type}.RBs",
         gc_inserts="12_efficiency_estimate/{sample}_{type}.RBs.GC_inserts.tsv",
