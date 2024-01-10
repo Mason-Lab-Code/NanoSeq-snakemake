@@ -126,7 +126,7 @@ BiocManager::install("epitools")
 This is an overview on how to use tmux, which is a terminal multiplexer that allows you to invoke Snakemake, and allow it to continue running even when you disconnect from Viking. 
 
 ```
-module load tools/tmux
+module load tmux
 tmux new -s session_name
 ```
 Type Ctrl+B then D to detach from the session and return to the main terminal. 
@@ -149,7 +149,7 @@ tmux kill-session -t session_name
 
 Invoke a "dry run" of the workflow to ensure everything is set up properly. You should see all of the jobs that Snakemake intends to submit. 
 ```
-module load tools/snakemake
+module load snakemake
 snakemake -n
 ```
 Create a directed acyclic graph to visualise the steps that snakemake will run. 
@@ -165,8 +165,8 @@ Start a new tmux session (as above) and invoke Snakemake to start executing the 
 # Create tmux session
 tmux new -s nanoseq-snakemake
 # Load conda and snakemake
-module load lang/Anaconda3
-module load tools/snakemake
+module load Miniconda3
+module load snakemake
 # Run Snakemake
 snakemake --slurm --default-resources slurm_account=<account-name> slurm_partition=nodes --jobs 24 --use-conda --conda-frontend conda
 # Detach from tmux session (enter Ctrl+B then D) i.e. return to the main terminal
