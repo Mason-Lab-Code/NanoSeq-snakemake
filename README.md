@@ -9,11 +9,6 @@ To use this Snakemake workflow, simply clone this repository and change director
 git clone https://github.com/Mason-Lab-Code/NanoSeq-snakemake/
 cd NanoSeq-snakemake/
 ```
-### Configuration for using conda environments on Viking
-
-One of the tools used in this workflow requires installation into an environment using conda. 
-
-If you haven't used conda environments on Viking before, follow the set up instructions available here: https://wiki.york.ac.uk/pages/viewpage.action?pageId=218794148 
 
 ### Set up initial directory structure
 
@@ -164,11 +159,10 @@ Start a new tmux session (as above) and invoke Snakemake to start executing the 
 ```
 # Create tmux session
 tmux new -s nanoseq-snakemake
-# Load conda and snakemake
-module load Miniconda3
+# Load Snakemake
 module load snakemake
 # Run Snakemake
-snakemake --slurm --default-resources slurm_account=<account-name> slurm_partition=nodes --jobs 24 --use-conda --conda-frontend conda
+snakemake --slurm --default-resources slurm_account=<account-name> slurm_partition=nodes --jobs 24 
 # Detach from tmux session (enter Ctrl+B then D) i.e. return to the main terminal
 ```
 Check on the progress of submitted jobs using squeue. 
