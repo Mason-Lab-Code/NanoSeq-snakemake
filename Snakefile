@@ -77,7 +77,6 @@ rule bwa_index:
         amb="01_ref/{genome}.amb",
         ann="01_ref/{genome}.ann",
         bwt="01_ref/{genome}.bwt",
-        fai="01_ref/{genome}.fai",
         pac="01_ref/{genome}.pac",
         sa="01_ref/{genome}.sa",
     resources:
@@ -100,7 +99,6 @@ rule bwa_mem:
         amb=expand("01_ref/{genome}.amb", genome=config["GENOME"]),
         ann=expand("01_ref/{genome}.ann", genome=config["GENOME"]),
         bwt=expand("01_ref/{genome}.bwt", genome=config["GENOME"]),
-        fai=expand("01_ref/{genome}.fai", genome=config["GENOME"]),
         pac=expand("01_ref/{genome}.pac", genome=config["GENOME"]),
         sa=expand("01_ref/{genome}.sa", genome=config["GENOME"])
     output:
