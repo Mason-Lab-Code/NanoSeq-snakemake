@@ -60,10 +60,10 @@ rule extract_tags:
         mem_mb=1000,
         cpus_per_task=1
     run:
-        if params.library_type == "sonicated":
-            shell("module purge; module load NanoSeq/3.2.1-foss-2020b-R-4.0.3; extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 2 -l {params.read_length}")
-        elif params.library_type == "HpyCH4V":
+        if params.library_type == "HpyCH4V":
             shell("module purge; module load NanoSeq/3.2.1-foss-2020b-R-4.0.3; extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 4 -l {params.read_length}")
+        elif params.library_type == "sonicated":
+            shell("module purge; module load NanoSeq/3.2.1-foss-2020b-R-4.0.3; extract_tags.py -a {input.fq1} -b {input.fq2} -c {output.fq1} -d {output.fq2} -m 3 -s 2 -l {params.read_length}")
         else:
             print("Specify library type as sonicated or HpyCH4V in config.yaml")
 
