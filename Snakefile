@@ -318,9 +318,10 @@ rule estimate_efficiency:
         bam_randomread="09_bam_random_read/{sample}_{type}.random_read.bam",
         genome=expand("01_ref/{genome}", genome=config["GENOME"])
     output:
-        rbs="12_efficiency_estimate/{sample}_{type}.RBs",
-        gc_inserts="12_efficiency_estimate/{sample}_{type}.RBs.GC_inserts.tsv",
-        pdf="12_efficiency_estimate/{sample}_{type}.RBs.pdf"
+        rbs="12_efficiency_estimate/RBs/{sample}_{type}.RBs",
+        gc_inserts="12_efficiency_estimate/RBs.GC_inserts/{sample}_{type}.RBs.GC_inserts.tsv",
+        pdf="12_efficiency_estimate/RBs.pdf/{sample}_{type}.RBs.pdf",
+        tsv="12_efficiency_estimate/{sample}_{type}.tsv"
     params:
         threads=2
     resources:
