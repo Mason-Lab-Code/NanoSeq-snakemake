@@ -312,7 +312,7 @@ rule check_contamination:
         module load VerifyBamID2/2.0.1-GCC-11.3.0
 
         mkdir -p 11_contamination_check
-        VerifyBamID --SVDPrefix 1000g.100k.b38.vcf.gz.dat --Reference {input.hla_fa} --BamFile {input.bam} --Output 11_contamination_check/{wildcards.sample}_{wildcards.type}
+        VerifyBamID --SVDPrefix ${VERIFY_BAM_ID_HOME}/resource/1000g.100k.b38.vcf.gz.dat --Reference {input.hla_fa} --BamFile {input.bam} --Output 11_contamination_check/{wildcards.sample}_{wildcards.type}
         """
 
 rule estimate_efficiency:
