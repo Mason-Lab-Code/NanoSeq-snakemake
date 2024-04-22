@@ -308,6 +308,9 @@ rule check_contamination:
         cpus_per_task=4
     shell:
         r"""
+        module purge
+        module load VerifyBamID2/2.0.1-GCC-11.3.0
+
         mkdir -p 11_contamination_check
         VerifyBamID --SVDPrefix 1000g.100k.b38.vcf.gz.dat --Reference {input.hla_fa} --BamFile {input.bam} --Output 11_contamination_check/{wildcards.sample}_{wildcards.type}
         """
