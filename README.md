@@ -63,7 +63,7 @@ Under "1000G_REFERENCE_GENOME:" enter the 1000 Genomes reference genome FASTA fi
 
 Under "READ_LENGTH:" enter the read length in bp (probably 150 bp)
 
-Under "LIBRARY_TYPE:" enter either sonicated or HPyCH4V
+Under "LIBRARY_TYPE:" enter either sonicated or HpyCH4V
 
 The config.yaml file should look something like this. Make sure you indent as below, and include the colon at the end of each line. 
 
