@@ -144,7 +144,7 @@ tmux kill-session -t session_name
 
 Invoke a "dry run" of the workflow to ensure everything is set up properly. You should see all of the jobs that Snakemake intends to submit. 
 ```
-module load snakemake
+module load snakemake/7.22.0-foss-2022a
 snakemake -n
 ```
 Create a directed acyclic graph to visualise the steps that snakemake will run. 
@@ -154,13 +154,15 @@ snakemake --dag | dot -Tsvg > dag.svg
 
 ### Run snakemake 
 
-Start a new tmux session (as above) and invoke Snakemake to start executing the workflow for real. Snakemake should start submitting jobs to Viking. 
+Start a new tmux session (as above), connect to a compute node (don't run anything directly on the login nodes), and invoke Snakemake to start executing the workflow for real. Snakemake should start submitting jobs to Viking. 
 
 ```
 # Create tmux session
 tmux new -s nanoseq-snakemake
+# Connect to a compute node through an interactive session
+srun --time=48:00:00 --pty /bin/bash
 # Load Snakemake
-module load snakemake
+module load snakemake/7.22.0-foss-2022a
 # Run Snakemake
 snakemake --slurm --default-resources slurm_account=<account-name> slurm_partition=nodes --jobs 24 
 # Detach from tmux session (enter Ctrl+B then D) i.e. return to the main terminal
