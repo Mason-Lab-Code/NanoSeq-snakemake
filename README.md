@@ -102,7 +102,7 @@ LIBRARY_TYPE:
 
 ### Install some R packages
 
-There are 2 packages required by NanoSeq that are not pre-installed with the R version that NanoSeq uses on Viking - these are deepSNV and epitools.  
+There are 2 R packages required by NanoSeq that are not pre-installed with the R version that NanoSeq uses on Viking - these are deepSNV and epitools. Also install tidyverse (required for custom efficiency metric collation step). 
   
 To install: 
 ```
@@ -114,6 +114,8 @@ Then in R:
 library(BiocManager)
 BiocManager::install("deepSNV")
 BiocManager::install("epitools")
+
+install.packages("tidyverse")
 ```
 
 ### Set up tmux session
