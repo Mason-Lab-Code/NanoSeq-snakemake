@@ -355,8 +355,13 @@ rule collate_efficiency:
         runtime=15,
         mem_mb=500,
         cpus_per_task=1
-    script:
-        "collate-efficiency-metrics.R"
+    shell:
+        r"""
+        module purge
+        module load R/4.2.1
+
+        Rscript collate-efficiency-metrics.R
+        """
 
 rule organise_outputs:
     input:
