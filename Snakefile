@@ -358,7 +358,7 @@ rule collate_efficiency:
     shell:
         r"""
         module purge
-        module load R/4.2.1
+        module load NanoSeq/3.2.1-foss-2020b-R-4.0.3
 
         Rscript collate-efficiency-metrics.R
         """
