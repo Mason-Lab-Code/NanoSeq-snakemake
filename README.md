@@ -94,7 +94,7 @@ GENOME:
     GRCh38_full_analysis_set_plus_decoy_hla.fa:
 
 READ_LENGTH:
-    150:
+    151:
 
 LIBRARY_TYPE:
     sonicated:
