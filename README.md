@@ -111,11 +111,14 @@ R # Start R
 ```
 Then in R:
 ```
-library(BiocManager)
-BiocManager::install("deepSNV")
-BiocManager::install("epitools")
 
-install.packages("tidyverse")
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+library(BiocManager)
+if (!requireNamespace("deepSNV", quietly = TRUE)) BiocManager::install("deepSNV")
+if (!requireNamespace("epitools", quietly = TRUE)) BiocManager::install("epitools")
+
+if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
+
 ```
 
 ### Set up tmux session
