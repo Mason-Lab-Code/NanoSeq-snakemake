@@ -94,10 +94,10 @@ GENOME:
     GRCh38_full_analysis_set_plus_decoy_hla.fa:
 
 READ_LENGTH:
-    151:
+    151
 
 LIBRARY_TYPE:
-    sonicated:
+    sonicated
 ```
 
 ### Install some R packages
