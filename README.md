@@ -180,6 +180,28 @@ Check on the progress of the Snakemake execution by reattaching to the tmux sess
 ```
 tmux attach-session -t nanoseq-snakemake
 ```
+### Get Whole Genome Metrics
+
+**1- Get whole genome read bundles**
+
+```bash
+mkdir 15_wg_rb_metrics/; cd 15_wg_rb_metrics/; for i in ../08_bam_rb_tags/*bam; do name=`echo $i | rev | cut -d'/' -f1 | rev | cut -d. -f1`; sbatch -J $name --time=00:45:00 --mem=20gb --account=biol-cancerinf-2020 --wrap="mkdir -p 01_RBs; module load SAMtools/1.16.1-GCC-11.3.0; ../02_scripts/extra_scripts/my_efficiency_nanoseq.pl -x $i -o 01_RBs/${name}.RBs"; done; cd ..
+
+```
+
+**2- Get whole genome read bundle totals (total and OK)** 
+
+```bash
+cd 15_wg_rb_metrics/01_RBs/; for i in *RBs; do name=`echo $i | cut -d. -f1`; sbatch -J $name --time=01:00:00 --mem=10gb --account=biol-cancerinf-2020 --wrap="mkdir -p ../02_WG-RB-totals; module load R/4.2.1; Rscript ../../02_scripts/extra_scripts/get-total-and-OK-RB-totals.R $i ../02_WG-RB-totals/${name}.RB-totals-whole-genome.tsv"; done; cd ../..
+```
+
+**3- Collate Metrics into one dataframe.** 
+
+DON’T INCLUDE UNDILUTED - delete the UD WG RB files if they didn’t already fail to be created.
+
+```bash
+cd 15_wg_rb_metrics/; module load R/4.2.1; Rscript ../02_scripts/extra_scripts/collate-read-bundle-totals.R
+```
 
 ### Outputs
 
