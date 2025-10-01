@@ -203,6 +203,20 @@ DON’T INCLUDE UNDILUTED - delete the UD WG RB files if they didn’t already f
 cd 15_wg_rb_metrics/; module load R/4.2.1; Rscript ../02_scripts/extra_scripts/collate-read-bundle-totals.R
 ```
 
+### Create Catalog Files
+
+**1- Convert TSV files**
+
+```bash
+mkdir -p 16_catalogs; mkdir -p 16_catalogs/01_tsv; for vcf in 13_vcf/*.vcf.gz; do name=$(basename "$vcf" | sed 's/.vcf.gz//'); ./02_scripts/01_SIGNAL_vcf_to_tsv.sh $vcf 16_catalogs/01_tsv/$name.tsv; done 
+```
+
+**2- Generate catalog Files**
+
+```bash
+mkdir -p 16_catalogs; mkdir -p 16_catalogs/02_catalogs; for tsv in 16_catalogs/01_tsv/*.tsv; do python ./02_scripts/02_SIGNAL_create_SBS96_catalog.py $tsv 01_ref/GRCh38.primary_assembly.genome.fa; done; mv *._catalogue.tsv 16_catalogs/02_catalogs/
+```
+
 ### Outputs
 
 Path to output VCF files (SNVs): 10_analysis/<SAMPLE_CONDITION-vs-UNDILUTED>/tmpNanoSeq/post/results.muts.vcf.gz 
